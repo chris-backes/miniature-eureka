@@ -18,7 +18,7 @@ router.post('/notes', (req, res) => {
 
 router.delete('/notes/:id', (req, res) => {
     const result = deleteNote(req.body.id, db)
-    db.splice(result, 1)
+    db.splice(db.indexOf(result), 1)
     res.json(db)
 })
 
