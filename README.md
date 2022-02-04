@@ -1,21 +1,83 @@
-# Note Taker Starter Code
+# Note Taker
 
-User Story
-AS A small business owner
-I WANT to be able to write and save notes
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
+Deployed Site: https://intense-atoll-93115.herokuapp.com/
 
-Acceptance Criteria
-GIVEN a note-taking application
-WHEN I open the Note Taker
-THEN I am presented with a landing page with a link to a notes page
-WHEN I click on the link to the notes page
-THEN I am presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column
-WHEN I enter a new note title and the note’s text
-THEN a Save icon appears in the navigation at the top of the page
-WHEN I click on the Save icon
-THEN the new note I have entered is saved and appears in the left-hand column with the other existing notes
-WHEN I click on an existing note in the list in the left-hand column
-THEN that note appears in the right-hand column
-WHEN I click on the Write icon in the navigation at the top of the page
-THEN I am presented with empty fields to enter a new note title and the note’s text in
+Repo: https://github.com/chris-backes/miniature-eureka
+
+## Description
+
+This application began as starter code with the front-end already built-out. the task was to create the backend for persistent storage across devices with express.js.
+
+The application relies on Express.js for its routing and middleware. In addition, other node libraries support this project if production: path for directory navigation, and uuid for unique id generation to attached to the notes as they are stored.
+
+The files which contain code (other than the db and other peripheral bits) which I have contributed are the following (in bold):
+<pre>
+assets/
+db/
+    db.json
+lib/
+    <b>notes.js</b>
+public/
+    assets/
+        css/
+            styles.css
+        js/
+            index.js
+    index.html
+    notes.html
+routes/
+    apiRoutes/
+        <b>notes.js</b>
+    htmlRoutes/
+        <b>index.js</b>
+<b>server.js</b>
+
+README.md
+node_modules/
+package.json
+package-lock.json
+</pre>
+
+## Usage
+
+The application is accessed through a url (provided at the top). The funcitonality is intuitive, with tha capabilities to retrieve notes, add notes, and delete notes. This core fucntionality is contained in the following code (in /routes/apiRoutes/notes.js):
+
+```js
+router.get('/notes', (req, res) => {
+    res.json(db)
+})
+
+router.post('/notes', (req, res) => {
+    const { title, text } = req.body
+    const id = uuidv4() 
+    db.push({ title, text, id })
+    fs.writeFileSync('db/db.json', JSON.stringify(db))
+    res.json(db)
+})
+
+router.delete('/notes/:id', (req, res) => {
+    const result = deleteNote(req.body.id, db)
+    db.splice(result, 1)
+    res.json(db)
+})
+```
+
+## Media
+
+![Image of index page](./assets/index.png)
+
+![Image of notes page](./assets/notes.png)
+
+<p align="center">
+<img alt="gif of webpage" src="./assets/note-taker.gif" />
+</p>
+
+## License
+
+This project is licesned under ISC
+
+## Author
+
+Christopher Backes 
+
+Github: [chris-backes](https://github.com/chris-backes/)
