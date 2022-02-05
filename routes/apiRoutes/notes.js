@@ -8,8 +8,6 @@ router.get("/notes", (req, res) => {
 		encoding: "utf8",
 		flag: "r",
 	});
-	console.log(typeof JSON.parse(readDB))
-	console.log(typeof db)
 	res.json(JSON.parse(readDB));
 });
 
