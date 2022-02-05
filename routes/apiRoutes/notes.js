@@ -4,7 +4,13 @@ let db = require("../../db/db.json");
 const { v4: uuidv4 } = require("uuid");
 
 router.get("/notes", (req, res) => {
-	res.json(db);
+	const readDB = fs.readFileSync("db/db.json", {
+		encoding: "utf8",
+		flag: "r",
+	});
+	console.log(typeof JSON.parse(readDB))
+	console.log(typeof db)
+	res.json(JSON.parse(readDB));
 });
 
 router.post("/notes", (req, res) => {
@@ -16,8 +22,8 @@ router.post("/notes", (req, res) => {
 });
 
 router.delete("/notes/:id", (req, res) => {
-	db = db.filter(note => note.id !== req.params.id)
-    fs.writeFileSync('db/db.json', JSON.stringify(db))
+	db = db.filter((note) => note.id !== req.params.id);
+	fs.writeFileSync("db/db.json", JSON.stringify(db));
 	res.json(db);
 });
 
