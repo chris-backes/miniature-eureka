@@ -1,5 +1,5 @@
 const express = require('express');
-//established loal port if not being hosted on internet
+//established local port if not being hosted on internet
 const PORT = process.env.PORT || 3001;
 const app = express();
 const apiRoutes = require('./routes/apiRoutes/notes');
